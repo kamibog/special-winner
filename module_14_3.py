@@ -17,13 +17,12 @@ class UserState(StatesGroup):
     weight = State()
 
 
-kb = ReplyKeyboardMarkup(resize_keyboard=True)
-button = KeyboardButton(text='Рассчитать')
-button2 = KeyboardButton(text='Информация')
-buy = KeyboardButton(text='Купить')
-kb.add(button)
-kb.add(button2)
-kb.add(buy)
+kb = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Рассчитать'),
+     KeyboardButton(text='Информация'),
+     KeyboardButton(text='Купить')]
+],
+    resize_keyboard=True)
 
 kb_inline = InlineKeyboardMarkup()
 button3 = InlineKeyboardButton(text='Рассчитать норму калорий', callback_data='calories')
@@ -114,6 +113,12 @@ async def send_calories(message: types.Message, state: FSMContext):
     await message.answer(f"Ваша норма калорий: {bmr} ккал в день.")
 
     await state.finish()
+
+
+@dp.message_handler()
+async def all_message(message):
+    print("Введите команду /start, чтобы начать общение.")
+    await message.answer("Введите команду /start, чтобы начать общение.")
 
 
 if __name__ == "__main__":
