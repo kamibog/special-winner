@@ -1,9 +1,14 @@
-# 1st program
-print (5*9**0.5)
-# 2nd program
-print (9.99>9.98 and 1000!=1000.1)
-# 3rd program
-print((1234%1000//10)+(5678%1000//10))
-# 4th program
-print (int(13.42)==(42.13%1*100//1)) or (int(13.42%1*100//1)!=(42.13))
+from fastapi import FastAPI
+from app.routers.task import router as task_router
+from app.routers.user import router as user_router
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to Taskmanager"}
+
+app.include_router(task_router)
+app.include_router(user_router)
+
 
